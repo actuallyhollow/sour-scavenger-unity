@@ -20,11 +20,6 @@ public class CameraController : MonoBehaviour
         this.lookAction.Disable();
     }
 
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
     void Update()
     {
         Vector2 lookInput = this.lookAction.ReadValue<Vector2>();
