@@ -3137,6 +3137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b225b3cc01c0e4b6b845576b0d844d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  screenController: {fileID: 1425364285}
   hudController: {fileID: 1425364284}
   maxLives: 3
   maxHealth: 100

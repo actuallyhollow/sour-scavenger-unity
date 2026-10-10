@@ -27,6 +27,7 @@ public class ScreenController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI finalTimeText;
     [SerializeField] private TextMeshProUGUI bestTimeText;
     
+    private static bool skipMainMenu = false;
     private bool isGameActive = false;
     private bool isPaused = false;
 
@@ -60,6 +61,13 @@ public class ScreenController : MonoBehaviour
 
     private void Start()
     {
+        if (skipMainMenu == true)
+        {
+            skipMainMenu = false;
+            this.StartGame();
+            return;
+        }
+
         this.ShowScreen(this.startScreen);
         
         this.SetGameState(false, 1.0f, CursorLockMode.None); 
@@ -67,6 +75,7 @@ public class ScreenController : MonoBehaviour
         this.menuCamera.SetActive(true);
         this.playerCamera.SetActive(false);
         this.playerObject.SetActive(false);
+        this.menuSpawner.SetActive(true);
         this.SetPlayerControls(false);
     }
 
@@ -75,17 +84,13 @@ public class ScreenController : MonoBehaviour
         this.isGameActive = true;
         this.isPaused = false;
 
-        if(this.menuSpawner != null)
-        {
-            this.menuSpawner.SetActive(false);
-        }
-
+        this.menuSpawner.SetActive(false);
+        
         ConsumableItem[] leftoverItems = Object.FindObjectsByType<ConsumableItem>();
         foreach(ConsumableItem item in leftoverItems)
         {
             Object.Destroy(item.gameObject);
         }
-
         
         this.menuCamera.SetActive(false);
         this.playerObject.SetActive(true); 
@@ -110,17 +115,6 @@ public class ScreenController : MonoBehaviour
         this.SetPlayerControls(true);
     }
 
-    public void GameOver()
-    {
-        this.isGameActive = false;
-        this.hudController.StopTimer();
-        this.SetGameState(false, 0.0f, CursorLockMode.None);
-        this.SetPlayerControls(false);
-        
-        this.SaveAndDisplayScores();
-        this.ShowScreen(this.endScreen);
-    }
-
     private void TogglePause(InputAction.CallbackContext context)
     {
         if(this.isGameActive == false)
@@ -142,6 +136,17 @@ public class ScreenController : MonoBehaviour
         }
     }
 
+    public void GameOver()
+    {
+        this.isGameActive = false;
+        this.hudController.StopTimer();
+        this.SetGameState(false, 0.0f, CursorLockMode.None);
+        this.SetPlayerControls(false);
+        
+        this.SaveAndDisplayScores();
+        this.ShowScreen(this.endScreen);
+    }
+
     public void LoadMainMenu()
     {
         this.PrepareForSceneLoad();
@@ -150,6 +155,7 @@ public class ScreenController : MonoBehaviour
 
     public void RestartGame()
     {
+        skipMainMenu = true;
         this.PrepareForSceneLoad();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

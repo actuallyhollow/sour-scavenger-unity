@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    [SerializeField] private ScreenController screenController;
     [SerializeField] private HudController hudController;
 
     [Header("Lives Settings")]
@@ -82,6 +83,10 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
+            if(this.screenController != null)
+            {
+                this.screenController.GameOver();
+            }
             Debug.Log($"Player died! Lives remaining: {this.currentLives}. Game Over!");
             this.enabled = false; 
         }
