@@ -5,17 +5,23 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5.0F;
+    [SerializeField] private float rotationSpeed = 15.0F;
     [SerializeField] private InputActionReference moveAction;
     
     [Header("Camera Reference")]
     [SerializeField] private Transform cameraTransform;
 
+    [Header("Model Reference")]
+    [SerializeField] private Transform characterModel;
+
     private Rigidbody rigidbody;
     private Vector3 moveDirection;
+    private Animator animator;
 
     void Awake()
     {
         this.rigidbody = this.GetComponent<Rigidbody>();
+        this.animator = this.GetComponentInChildren<Animator>();
         
         if(this.cameraTransform == null && Camera.main != null)
         {
@@ -57,6 +63,17 @@ public class PlayerController : MonoBehaviour
         cameraRight.Normalize();
 
         this.moveDirection = (cameraForward * inputVector.y + cameraRight * inputVector.x).normalized;
+
+        if(this.animator != null)
+        {
+            this.animator.SetFloat("Speed", inputVector.magnitude);
+        }
+
+        if (this.moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(this.moveDirection);
+            this.characterModel.rotation = Quaternion.Slerp(this.characterModel.rotation, targetRotation, this.rotationSpeed * Time.deltaTime);
+        }
     }
 
     void FixedUpdate()
