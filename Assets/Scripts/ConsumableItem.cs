@@ -13,6 +13,16 @@ public class ConsumableItem : MonoBehaviour
     [SerializeField] private ItemEffect effectType = ItemEffect.RestoreHealth;
     [SerializeField] private float effectAmount = 20.0F;
 
+    [Header("Despawn Settings")]
+    [SerializeField] private float minDespawnTime = 5.0F;
+    [SerializeField] private float maxDespawnTime = 15.0F;
+
+    void Start()
+    {
+        float lifetime = Random.Range(this.minDespawnTime, this.maxDespawnTime);
+        Object.Destroy(this.gameObject, lifetime);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -21,7 +31,7 @@ public class ConsumableItem : MonoBehaviour
             
             if(stats != null)
             {
-                switch (this.effectType)
+                switch(this.effectType)
                 {
                     case ItemEffect.RestoreHealth:
                         stats.ApplyEffect(this.effectAmount);
@@ -34,7 +44,7 @@ public class ConsumableItem : MonoBehaviour
                         break;
                 }
 
-                Destroy(this.gameObject);
+                Object.Destroy(this.gameObject);
             }
         }
     }
