@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private UIController uiController;
+    [SerializeField] private HudController hudController;
 
     [Header("Lives Settings")]
     [SerializeField] private int maxLives = 3;
@@ -19,10 +19,10 @@ public class PlayerStats : MonoBehaviour
         this.currentHealth = this.maxHealth;
         this.currentLives = this.maxLives;
     
-        if (this.uiController != null)
+        if(this.hudController != null)
         {
-            this.uiController.UpdateHealth(this.currentHealth, this.maxHealth);
-            this.uiController.UpdateLives(this.currentLives);
+            this.hudController.UpdateHealth(this.currentHealth, this.maxHealth);
+            this.hudController.UpdateLives(this.currentLives);
         }
     }
 
@@ -30,9 +30,9 @@ public class PlayerStats : MonoBehaviour
     {
         this.currentHealth -= this.decayRate * Time.deltaTime;
 
-        if(this.uiController != null)
+        if(this.hudController != null)
         {
-            this.uiController.UpdateHealth(this.currentHealth, this.maxHealth);
+            this.hudController.UpdateHealth(this.currentHealth, this.maxHealth);
         }
 
         if(this.currentHealth <= 0)
@@ -46,9 +46,9 @@ public class PlayerStats : MonoBehaviour
         this.currentHealth += amount;
         this.currentHealth = Mathf.Clamp(this.currentHealth, 0.0F, this.maxHealth);
 
-        if(this.uiController != null)
+        if(this.hudController != null)
         {
-            this.uiController.UpdateHealth(this.currentHealth, this.maxHealth);
+            this.hudController.UpdateHealth(this.currentHealth, this.maxHealth);
         }
         
         Debug.Log($"Item consumed! Current Health is now: {this.currentHealth}");
@@ -58,9 +58,9 @@ public class PlayerStats : MonoBehaviour
     {
         this.currentLives += amount;   
 
-        if(this.uiController != null)
+        if(this.hudController != null)
         {
-            this.uiController.UpdateLives(this.currentLives);
+            this.hudController.UpdateLives(this.currentLives);
         }
         
         Debug.Log($"Extra life gained! Current Lives: {this.currentLives}");
@@ -70,9 +70,9 @@ public class PlayerStats : MonoBehaviour
     {
         this.currentLives--;
 
-        if(this.uiController != null)
+        if(this.hudController != null)
         {
-            this.uiController.UpdateLives(this.currentLives);
+            this.hudController.UpdateLives(this.currentLives);
         }
 
         if(this.currentLives > 0)
