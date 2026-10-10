@@ -9,6 +9,14 @@ public class ScreenController : MonoBehaviour
     [SerializeField] private InputActionReference pauseAction;
     [SerializeField] private int mainMenuSceneIndex = 0;
 
+    [Header("Player & Cameras")]
+    [SerializeField] private GameObject menuCamera;
+    [SerializeField] private GameObject menuSpawner;
+    [SerializeField] private GameObject playerObject;
+    [SerializeField] private GameObject playerCamera;
+    [SerializeField] private CameraController cameraController;
+    [SerializeField] private PlayerController playerController;
+
     [Header("UI Panels")]
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject pauseScreen;
@@ -24,12 +32,17 @@ public class ScreenController : MonoBehaviour
 
     private void Awake()
     {
-        if(this.hudController == null) {
+        if(this.hudController == null)
+        {
             Debug.LogError("ScreenController missing HudController reference!");
         }
         if(this.pauseAction == null)
         {
             Debug.LogError("ScreenController missing Pause Action reference!");
+        }
+        if(this.menuSpawner == null) 
+        {
+            Debug.LogError("ScreenController missing ConsumableSpawner reference!");
         }
     }
 
@@ -48,14 +61,37 @@ public class ScreenController : MonoBehaviour
     private void Start()
     {
         this.ShowScreen(this.startScreen);
-        this.SetGameState(false, 0.0f, CursorLockMode.None);
+        
+        this.SetGameState(false, 1.0f, CursorLockMode.None); 
+        
+        this.menuCamera.SetActive(true);
+        this.playerCamera.SetActive(false);
+        this.playerObject.SetActive(false);
+        this.SetPlayerControls(false);
     }
 
     public void StartGame()
     {
         this.isGameActive = true;
         this.isPaused = false;
+
+        if(this.menuSpawner != null)
+        {
+            this.menuSpawner.SetActive(false);
+        }
+
+        ConsumableItem[] leftoverItems = Object.FindObjectsByType<ConsumableItem>();
+        foreach(ConsumableItem item in leftoverItems)
+        {
+            Object.Destroy(item.gameObject);
+        }
+
         
+        this.menuCamera.SetActive(false);
+        this.playerObject.SetActive(true); 
+        this.playerCamera.SetActive(true);
+        this.SetPlayerControls(true);
+
         this.hudController.StartTimer();
         this.ShowScreen(this.hudPanel);
         this.SetGameState(true, 1.0f, CursorLockMode.Locked);
@@ -71,6 +107,7 @@ public class ScreenController : MonoBehaviour
         this.isPaused = false;
         this.ShowScreen(this.hudPanel);
         this.SetGameState(true, 1.0f, CursorLockMode.Locked);
+        this.SetPlayerControls(true);
     }
 
     public void GameOver()
@@ -78,6 +115,7 @@ public class ScreenController : MonoBehaviour
         this.isGameActive = false;
         this.hudController.StopTimer();
         this.SetGameState(false, 0.0f, CursorLockMode.None);
+        this.SetPlayerControls(false);
         
         this.SaveAndDisplayScores();
         this.ShowScreen(this.endScreen);
@@ -85,17 +123,18 @@ public class ScreenController : MonoBehaviour
 
     private void TogglePause(InputAction.CallbackContext context)
     {
-        if(!this.isGameActive)
+        if(this.isGameActive == false)
         {
             return;
         }
 
         this.isPaused = !this.isPaused;
         
-        if(this.isPaused)
+        if(this.isPaused == true)
         {
             this.ShowScreen(this.pauseScreen);
             this.SetGameState(false, 0.0f, CursorLockMode.None);
+            this.SetPlayerControls(false);
         }
         else
         {
@@ -149,5 +188,17 @@ public class ScreenController : MonoBehaviour
     {
         Time.timeScale = timeScale;
         Cursor.lockState = cursorMode;
+    }
+
+    private void SetPlayerControls(bool enabled)
+    {
+        if(this.cameraController != null)
+        {
+            this.cameraController.enabled = enabled;
+        }
+        if(this.playerController != null)
+        {
+            this.playerController.enabled = enabled;
+        }
     }
 }
