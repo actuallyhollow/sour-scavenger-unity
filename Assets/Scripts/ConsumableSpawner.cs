@@ -8,7 +8,7 @@ public class ConsumableSpawner : MonoBehaviour
     [Header("Spawn Settings")]
     [SerializeField] private float spawnInterval = 3.0F;
     [SerializeField] private float spawnRadius = 20.0F; 
-    [SerializeField] private float spawnHeight = 1.0F;
+    [SerializeField] private float spawnHeight = 0.0F;
 
     private float timer;
 
@@ -42,6 +42,10 @@ public class ConsumableSpawner : MonoBehaviour
             this.transform.position.z + randomPoint.y
         );
 
-        Object.Instantiate(randomPrefab, spawnPosition, Quaternion.identity);
+        float randomYAngle = Random.Range(0f, 360f);
+        Vector3 originalAngles = randomPrefab.transform.eulerAngles;
+        Quaternion finalRotation = Quaternion.Euler(originalAngles.x, randomYAngle, originalAngles.z);
+
+        Object.Instantiate(randomPrefab, spawnPosition, finalRotation);
     }
 }
