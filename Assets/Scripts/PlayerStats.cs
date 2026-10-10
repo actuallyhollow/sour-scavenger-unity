@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    [SerializeField] private UIController uiController;
+
     [Header("Lives Settings")]
     [SerializeField] private int maxLives = 3;
 
@@ -16,11 +18,22 @@ public class PlayerStats : MonoBehaviour
     {
         this.currentHealth = this.maxHealth;
         this.currentLives = this.maxLives;
+    
+        if (this.uiController != null)
+        {
+            this.uiController.UpdateHealth(this.currentHealth, this.maxHealth);
+            this.uiController.UpdateLives(this.currentLives);
+        }
     }
 
     void Update()
     {
         this.currentHealth -= this.decayRate * Time.deltaTime;
+
+        if(this.uiController != null)
+        {
+            this.uiController.UpdateHealth(this.currentHealth, this.maxHealth);
+        }
 
         if(this.currentHealth <= 0)
         {
@@ -32,19 +45,35 @@ public class PlayerStats : MonoBehaviour
     {
         this.currentHealth += amount;
         this.currentHealth = Mathf.Clamp(this.currentHealth, 0.0F, this.maxHealth);
+
+        if(this.uiController != null)
+        {
+            this.uiController.UpdateHealth(this.currentHealth, this.maxHealth);
+        }
         
         Debug.Log($"Item consumed! Current Health is now: {this.currentHealth}");
     }
 
     public void AddLife(int amount = 1)
     {
-        this.currentLives += amount;     
+        this.currentLives += amount;   
+
+        if(this.uiController != null)
+        {
+            this.uiController.UpdateLives(this.currentLives);
+        }
+        
         Debug.Log($"Extra life gained! Current Lives: {this.currentLives}");
     }
 
     private void Die()
     {
         this.currentLives--;
+
+        if(this.uiController != null)
+        {
+            this.uiController.UpdateLives(this.currentLives);
+        }
 
         if(this.currentLives > 0)
         {
