@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ConsumableSpawner : MonoBehaviour
 {
@@ -9,11 +10,29 @@ public class ConsumableSpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 3.0F;
     [SerializeField] private float spawnRadius = 20.0F; 
     [SerializeField] private float spawnHeight = 0.0F;
+    [SerializeField] private int maxItems = 15;
+    [SerializeField] private int initialSpawnCount = 10;
 
     private float timer;
+    private List<GameObject> spawnedItems = new List<GameObject>();
+
+    void Start()
+    {
+        for (int i = 0; i < this.initialSpawnCount; i++)
+        {
+            this.SpawnRandomItem();
+        }
+    }
 
     void Update()
     {
+        this.spawnedItems.RemoveAll(item => item == null);
+
+        if(this.spawnedItems.Count >= this.maxItems)
+        {
+            return; 
+        }
+
         this.timer += Time.deltaTime;
 
         if(this.timer >= this.spawnInterval)
@@ -46,6 +65,7 @@ public class ConsumableSpawner : MonoBehaviour
         Vector3 originalAngles = randomPrefab.transform.eulerAngles;
         Quaternion finalRotation = Quaternion.Euler(originalAngles.x, randomYAngle, originalAngles.z);
 
-        Object.Instantiate(randomPrefab, spawnPosition, finalRotation);
+        GameObject newItem = Object.Instantiate(randomPrefab, spawnPosition, finalRotation);
+        this.spawnedItems.Add(newItem);
     }
 }
