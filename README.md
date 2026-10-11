@@ -1,30 +1,63 @@
-## Unity Prototype ##
+## Sour Scavenger Unity ##
+A Unity-based 3D implementation of a fast-paced custom survival game, **Sour Scavenger**. The project offers a low-poly interactive environment with real-time player controls, while adopting an arcade-style loop of managing a constantly draining health bar, dodging explosive hazards, and setting high scores.
 
-*Note: This is an experimental Unity sandbox. The final game title, theme, and characters are currently WIP.*
+### 🚧 Status ###
+**Active [v1.0.0]** - Initial release featuring core game loop, dynamic item spawners, audio cues, and score tracking.
 
-### ⚙️ Core Mechanics ###
-Prototyping a survival loop where the player must collect randomly spawned items to maintain a constantly depleting bar. 
-- Beneficial items restore the bar.
-- Harmful items deplete the bar or consume a player life.
-- Rare items may give powerful effects.
-- Difficulty scales as the timer progresses.
+### 🎯 Goals ###
+1. **Practice Unity Systems** - Design modular gameplay loops, spawner logic, and 3D asset integration.
+2. **Implement Game States** - Manage health decay and life counts cleanly using custom C# scripts.
+3. **Build Responsive UI** - Integrate real-time HUD indicators, pause menus, and player score tracking.
 
-### ⚠️ Crucial Setup (Git LFS) ###
-Because this Unity project uses large assets (like Mixamo animations or textures), Git LFS **must** be installed before cloning the repository. Otherwise, 3D models and textures will be corrupted.
+### 🎮 Rules ###
+**How to Play**
+* **Scavenge Resources** - Navigate the map as a raccoon to collect lemons spawning around the arena.
+* **Manage Health** - Prevent your constantly-draining health bar from depleting to avoid losing a life.
+* **Survive Hazards** - Dodge volatile bombs disguised as lemon trees to survive as long as possible.
 
-**1. Install Git LFS:**
-Download the installer from [git-lfs.com](https://git-lfs.com/) and run it (or use a package manager like Homebrew: `brew install git-lfs`).
+**Consumables and Hazards**
+* **🍋 Lemons** - Serving as the raccoon's main snack, restores a chunk of health.
+* **💣 Bombs** - Detonating on contact, instantly depletes a portion of health.
+* **🍄 Mushrooms** - Awarding a rare treat, grants an extra life that can be hoarded.
 
-**2. Initialize LFS:**
-Open a terminal or command prompt and run:
-`git lfs install`
+**Game End States**
+* **Defeat** - Running out of health and exhausting all remaining lives.
+* **High Score** - Surviving the longest to establish a new personal record time.
 
-**3. Clone the Repository:**
-Once LFS is active, safely clone the project:
-`git clone https://github.com/actuallyhollow/survival-prototype-unity.git`
+**Controls and Input**
+* **Moving** - Use `WASD` or `Arrow` Keys to navigate the arena.
+* **Pause** - Press `Escape` to pause session or return to the menu.
+* **Interact** - Use `Left Click` or `Space` to select UI options.
 
-### ✏️ Development Notes ###
-- **Cross-Platform Compatibility:**
-The `.gitattributes` file is configured to force `LF` line endings. This prevents artificial merge conflicts or tracking errors when working across different operating systems.
-- **Asset Renaming:**
-If a file, folder, or Scene needs to be renamed, **only do it inside the Unity Editor**. Never rename files in an external IDE or file explorer, as this will break the `.meta` tracking files.
+### 🚀 Running ###
+**Prerequisites and Setup**
+* **System Dependencies** - Requires [Unity 6][unity-url] or higher and [Git LFS][lfs-url] for large asset handling.
+* **Initialize LFS** - Open your terminal and run `git lfs install` to initialize Git LFS (run once globally).
+* **Clone Repository** - Open your terminal and run `git clone https://github.com/actuallyhollow/sour-scavenger.git`.
+
+**Opening in Unity Editor**
+* **Add Project** - Open `Unity Hub`, click `Add > Add project from disk`, and select `sour-scavenger` root folder.
+* **Launch Scene** - In the Unity Project panel, navigate to `Assets/Scenes/` and double-click `MainGame.unity`.
+* **Play Game** - Click the `Play` button (`Ctrl+P` / `Cmd+P`) at the top of the Unity Editor to start playing.
+
+### ✏️ Feedback ###
+* **Report an Issue** - To report a bug or request a feature, please open a ticket on the [Issues][issues-url] tracker.
+* **Join the Discussion** - To share code or gameplay critiques, please visit the [Discussions][discussions-url] board.
+* **Show Your Support** - If you enjoyed playing or exploring the project, consider leaving a ⭐️!
+
+### 📖 Credits ###
+* **Author** - Designed and developed by [Omar Idris][author-url] (`@actuallyhollow`).
+* **Assets** - Environment & Character models by [Quaternius][quaternius-url].
+* **Audios** - UI audio by [Kenney][kenney-url] and gameplay SFX from [FreeSound][freesound-url].
+* **License** - Check the [LICENSE][license-url] file for details.
+
+<!-- Source References -->
+[unity-url]: https://unity.com/
+[lfs-url]: https://git-lfs.com/
+[issues-url]: https://github.com/actuallyhollow/sour-scavenger/issues
+[discussions-url]: https://github.com/actuallyhollow/sour-scavenger/discussions
+[author-url]: https://github.com/actuallyhollow
+[quaternius-url]: https://quaternius.com/
+[kenney-url]: https://kenney.nl/
+[freesound-url]: https://freesound.org/
+[license-url]: ./LICENSE
