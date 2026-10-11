@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class ScreenController : MonoBehaviour
 {
@@ -149,6 +150,11 @@ public class ScreenController : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        if(EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
         this.PrepareForSceneLoad();
         SceneManager.LoadScene(this.mainMenuSceneIndex);
     }
