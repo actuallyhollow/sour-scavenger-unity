@@ -18,10 +18,12 @@ public class ConsumableSpawner : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < this.initialSpawnCount; i++)
-        {
-            this.SpawnRandomItem();
-        }
+        this.ResetSpawner();
+    }
+
+    void OnEnable()
+    {
+        this.ResetSpawner();
     }
 
     void Update()
@@ -39,6 +41,24 @@ public class ConsumableSpawner : MonoBehaviour
         {
             this.SpawnRandomItem();
             this.timer = 0.0F;
+        }
+    }
+
+    public void ResetSpawner()
+    {
+        foreach(GameObject item in this.spawnedItems)
+        {
+            if(item != null)
+            {
+                Object.Destroy(item);
+            }
+        }
+        this.spawnedItems.Clear();
+        this.timer = 0.0F;
+
+        for(int i = 0; i < this.initialSpawnCount; i++)
+        {
+            this.SpawnRandomItem();
         }
     }
 
