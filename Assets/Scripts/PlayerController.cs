@@ -14,9 +14,13 @@ public class PlayerController : MonoBehaviour
     [Header("Model Reference")]
     [SerializeField] private Transform characterModel;
 
+    [Header("Audio Settings")]
+    [SerializeField] private float footstepInterval = 0.5F;
+
     private Rigidbody rigidbody;
     private Vector3 moveDirection;
     private Animator animator;
+    private float footstepTimer;
 
     void Awake()
     {
@@ -69,10 +73,15 @@ public class PlayerController : MonoBehaviour
             this.animator.SetFloat("Speed", inputVector.magnitude);
         }
 
-        if (this.moveDirection != Vector3.zero)
+        if(this.moveDirection != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(this.moveDirection);
             this.characterModel.rotation = Quaternion.Slerp(this.characterModel.rotation, targetRotation, this.rotationSpeed * Time.deltaTime);
+            this.HandleFootsteps(inputVector.magnitude);
+        }
+        else
+        {
+            this.footstepTimer = 0.0F;
         }
     }
 
@@ -83,5 +92,26 @@ public class PlayerController : MonoBehaviour
             this.rigidbody.linearVelocity.y, 
             this.moveDirection.z * this.moveSpeed
         );
+    }
+
+    private void HandleFootsteps(float inputMagnitude)
+    {
+        if(inputMagnitude > 0.1F)
+        {
+            this.footstepTimer += Time.deltaTime;
+
+            if(this.footstepTimer >= this.footstepInterval)
+            {
+                if(AudioController.Instance != null)
+                {
+                    AudioController.Instance.PlayAudio(AudioController.Instance.footstepAudio);
+                }
+                this.footstepTimer = 0.0F;
+            }
+        }
+        else
+        {
+            this.footstepTimer = 0.0F;
+        }
     }
 }

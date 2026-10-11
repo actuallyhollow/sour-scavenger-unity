@@ -34,12 +34,15 @@ public class ConsumableItem : MonoBehaviour
                 switch(this.effectType)
                 {
                     case ItemEffect.RestoreHealth:
+                        AudioController.Instance.PlayAudio(AudioController.Instance.eatAudio);
                         stats.ApplyEffect(this.effectAmount);
                         break;
                     case ItemEffect.TakeDamage:
+                        AudioController.Instance.PlayAudio(AudioController.Instance.hurtAudio);
                         stats.ApplyEffect(-this.effectAmount);
                         break;
                     case ItemEffect.ExtraLife:
+                        AudioController.Instance.PlayAudio(AudioController.Instance.powerupAudio);
                         stats.AddLife((int)this.effectAmount);
                         break;
                 }
