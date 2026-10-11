@@ -91,7 +91,7 @@ MonoBehaviour:
   effectType: 2
   effectAmount: 1
   minDespawnTime: 1
-  maxDespawnTime: 3
+  maxDespawnTime: 2
 --- !u!64 &-1465499091719718028
 MeshCollider:
   m_ObjectHideFlags: 0

@@ -29762,11 +29762,11 @@ MonoBehaviour:
   - {fileID: 1050219791009028832, guid: 51cb1b364828448c9a7825007ca83a5c, type: 3}
   - {fileID: 1050219791009028832, guid: 9deb8d8afa43d4134bf14e6cf7002d2a, type: 3}
   - {fileID: 1149003640138997071, guid: 93f4d5756d8b748f29d07dcb1ac049b6, type: 3}
-  spawnInterval: 3
-  spawnRadius: 20
+  spawnInterval: 1
+  spawnRadius: 35
   spawnHeight: 0
-  maxItems: 15
-  initialSpawnCount: 0
+  maxItems: 20
+  initialSpawnCount: 5
 --- !u!1001 &163370902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57031,10 +57031,10 @@ MonoBehaviour:
   - {fileID: 1050219791009028832, guid: 51cb1b364828448c9a7825007ca83a5c, type: 3}
   - {fileID: 1050219791009028832, guid: 9deb8d8afa43d4134bf14e6cf7002d2a, type: 3}
   - {fileID: 1149003640138997071, guid: 93f4d5756d8b748f29d07dcb1ac049b6, type: 3}
-  spawnInterval: 0.25
-  spawnRadius: 100
+  spawnInterval: 0.15
+  spawnRadius: 50
   spawnHeight: 0
-  maxItems: 30
+  maxItems: 50
   initialSpawnCount: 0
 --- !u!4 &308343982
 Transform:
@@ -216680,7 +216680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ce528a38579406db98f922d09e2bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 20
+  moveSpeed: 25
   rotationSpeed: 15
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cameraTransform: {fileID: 330585546}
@@ -216702,7 +216702,7 @@ MonoBehaviour:
   hudController: {fileID: 1425364284}
   maxLives: 3
   maxHealth: 100
-  decayRate: 5
+  decayRate: 20
 --- !u!1001 &1145032628
 PrefabInstance:
   m_ObjectHideFlags: 0
