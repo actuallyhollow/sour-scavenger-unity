@@ -33,7 +33,7 @@ A Unity-based 3D implementation of a fast-paced custom survival game, **Sour Sca
 **Prerequisites and Setup**
 * **System Dependencies** - Requires [Unity 6][unity-url] or higher and [Git LFS][lfs-url] for large asset handling.
 * **Initialize LFS** - Open your terminal and run `git lfs install` to initialize Git LFS (run once globally).
-* **Clone Repository** - Open your terminal and run `git clone https://github.com/actuallyhollow/sour-scavenger.git`.
+* **Clone Repository** - Open your terminal and run `git clone https://github.com/actuallyhollow/sour-scavenger-unity.git`.
 
 **Opening in Unity Editor**
 * **Add Project** - Open `Unity Hub`, click `Add > Add project from disk`, and select `sour-scavenger` root folder.
